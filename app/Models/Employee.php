@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Employee extends Model
 {
@@ -27,5 +28,14 @@ class Employee extends Model
         return Company::where('id', $this->company)->first()->name;
     }
 
-    protected $appends = ['fullName', 'companyName'];
+    public function getEmployeePictureAttribute()
+    {
+        if (empty($this->picture)) {
+            return Storage::url('avatar_default.jpg');
+        } else {
+            return Storage::url($this->picture);
+        }
+    }
+
+    protected $appends = ['fullName', 'companyName', 'employeePicture'];
 }
