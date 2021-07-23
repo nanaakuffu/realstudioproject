@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Company;
 use App\Models\Employee;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,12 +22,13 @@ class EmployeeFactory extends Factory
      */
     public function definition()
     {
+        $companies = Company::select('id', 'name')->pluck('name', 'id');
         return [
             'first_name' => $this->faker->name(),
             'last_name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->phoneNumber(),
-            'company' => $this->faker->num
+            'company' => $this->faker->array_rand($companies)
         ];
     }
 }
