@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.dashboard', ['page_uri' => 'dashboard']);
 });
 
 Route::group(['middleware' => ['auth']], function () {

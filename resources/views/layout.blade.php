@@ -220,8 +220,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="text-white" for="email">Email Address</label>
-                            <input class="form-control" name="email" id="email" placeholder="eg: jamessmith@domain.com" type="email" :value="old('email')" autocomplete="email">
+                            <label class="text-white" for="emailAddress">Email Address</label>
+                            <input class="form-control" name="email" id="emailAddress" placeholder="eg: jamessmith@domain.com" type="email" :value="old('email')" autocomplete="email">
                         </div>
 
 
@@ -296,7 +296,7 @@
             rules: {
                 name: "required",
 
-                email: {
+                emailAddress: {
                     required: true,
                     email: true,
                     remote: "/check-email",
@@ -334,12 +334,13 @@
             submitHandler: (form) => {
                 const post_data = {
                     _token: $("input[name=_token]").val(),
-                    email: $("#email").val(),
+                    email: $("#emailAddress").val(),
                     name: $("#name").val(),
                     password: $("#password").val(),
                     password_confirmation: $("#confirm_password").val()
                 }
 
+                alert($("#emailAddress").val());
                 const formData = JSON.stringify(post_data);
 
                 $.ajax({

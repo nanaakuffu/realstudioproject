@@ -20,7 +20,6 @@ class UserController extends Controller
         if ($result) {
             // Send the welcome email to the therapist
             $user = User::findOrFail($result->id);
-            // $user->notify(new WelcomeNotification);
 
             // Build response for the request
             $response_code = Response::HTTP_OK;
