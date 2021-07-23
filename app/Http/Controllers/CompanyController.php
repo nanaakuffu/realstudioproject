@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Contracts\Resource;
 use App\Models\Company;
 use App\Traits\UploadPhoto;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-class CompanyController extends Controller
+class CompanyController extends Controller implements Resource
 {
     use UploadPhoto;
     /**
@@ -34,7 +35,7 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
@@ -76,7 +77,7 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): JsonResponse
     {
         $company = Company::find($id);
         if ($company) {
@@ -103,7 +104,7 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): JsonResponse
     {
         $this->validate($request, [
             'name' => ['required', 'string', 'max:255'],
@@ -147,7 +148,7 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $resource = Company::find($id);
         $result = $resource->delete();
