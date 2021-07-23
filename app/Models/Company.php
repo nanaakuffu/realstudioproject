@@ -16,6 +16,11 @@ class Company extends Model
         'website'
     ];
 
+    public function employees()
+    {
+        return $this->hasMany(Employee::class, 'company');
+    }
+
     public function getCompanyLogoAttribute()
     {
         if (empty($this->logo)) {
