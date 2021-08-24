@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('pages.dashboard', ['page_uri' => 'dashboard']);
 });
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['web', 'auth']], function () {
     Route::get('/company', [App\Http\Controllers\CompanyController::class, 'index']);
     Route::post('/company', [App\Http\Controllers\CompanyController::class, 'store']);
     Route::get('/company/{id}', [App\Http\Controllers\CompanyController::class, 'show']);

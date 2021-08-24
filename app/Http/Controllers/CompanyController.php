@@ -41,22 +41,21 @@ class CompanyController extends Controller implements Resource
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'string', 'max:255', Rule::unique(Company::class)],
             'website' => ['string', 'max:255', 'nullable'],
-            'logo' => ['nullable', 'image', 'max:1024']
+            'logo-file' => ['nullable', 'image', 'max:1024']
         ]);
 
-        if ($request->hasFile('logo')) {
-            $request->logo = $this->uploadPhoto($request->logo, 'company-logos');
-        }
-
         $companyData = $request->all();
+        if ($request->hasFile('logo-file')) {
+            $companyData['logo'] = $this->uploadPhoto($request->file('logo-file'), 'company-logos');
+        }
 
         $result = DB::transaction(function () use ($companyData) {
             return Company::create($companyData);
         });
 
         if ($result) {
-            $response_code = Response::HTTP_OK;
-            $response_message = "Profile Updated successfully";
+            $response_code = Response::HTTP_CREATED;
+            $response_message = "Company save successfully";
         } else {
             $response_code = Response::HTTP_INTERNAL_SERVER_ERROR;
             $response_message = "Sorry! An error occured. Please try again";
@@ -83,7 +82,7 @@ class CompanyController extends Controller implements Resource
         if ($company) {
             $response_code = Response::HTTP_OK;
             $response_data = $company;
-            $response_message = "Data query was succesfull";
+            $response_message = "Data query was successfull";
         } else {
             $response_code = Response::HTTP_INTERNAL_SERVER_ERROR;
             $response_data = [];
@@ -112,8 +111,6 @@ class CompanyController extends Controller implements Resource
             'website' => ['string', 'max:255', 'nullable'],
             'logo-file' => ['nullable', 'image', 'max:1024']
         ]);
-
-
 
         $company = Company::find($id);
         $companyData = $request->all();
@@ -155,7 +152,7 @@ class CompanyController extends Controller implements Resource
 
         if ($result) {
             $code = Response::HTTP_OK;
-            $message = "Company deleted successfuly!";
+            $message = "Company deleted successfully!";
         } else {
             $code = Response::HTTP_INTERNAL_SERVER_ERROR;
             $message = "Sorry! An error ocured";

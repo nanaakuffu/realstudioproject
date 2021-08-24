@@ -107,7 +107,7 @@ const deleteCompany = (company_id) => {
             data: post_data,
             dataType: "json",
             success: (response) => {
-                if (status == 200) {
+                if (response.response_code == 200) {
                     location.href = "/company";
                     toastr.success(response.response_message);
                 } else {
